@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -52,11 +53,18 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         //generar el token
         String token = Jwts.builder()
                 .setSubject(email)
-                .setExpiration(new Date())
-                .signWith(SignatureAlgorithm.HS512, "clavesecreta")
+                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_DATE))
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret())
                 .compact();
 
-        log.info(token);
+        //log.info(token);
+
+        String data = new ObjectMapper().writeValueAsString(Map.of("token", SecurityConstants.TOKEN_PREFIX + token));
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().print(data);
+        response.flushBuffer();
     }
 
 }

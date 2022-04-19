@@ -1,5 +1,6 @@
 package com.emirsanchez.encuestabackend.models.request;
 
+import com.emirsanchez.encuestabackend.annotations.UniqueEmail;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -14,6 +15,7 @@ public class UserRegistrerRequestModel {
 
     @NotEmpty
     @Email
+    @UniqueEmail
     private String email;
 
     @NotEmpty

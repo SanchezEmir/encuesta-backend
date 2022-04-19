@@ -23,6 +23,13 @@ public class EncuestabackendApplication {
 
     }
 
+    @Bean
+    public SpringApplicationContex springApplicationContex() {
+
+        return new SpringApplicationContex();
+
+    }
+
     @Bean(name = "AppProperties")
     public AppProperties getAppProperties() {
 

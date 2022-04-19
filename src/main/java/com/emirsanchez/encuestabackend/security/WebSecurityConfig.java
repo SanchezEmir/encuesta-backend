@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
 
         http.addFilter(getAuthenticationFilter())
+                .addFilter(new AuthorizationFilter(authenticationManager()))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -45,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         final AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager());
 
-        authenticationFilter.setFilterProcessesUrl("/users/login");
+        authenticationFilter.setFilterProcessesUrl(SecurityConstants.LOGIN_URL);
 
         return authenticationFilter;
 

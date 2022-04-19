@@ -24,6 +24,12 @@ public class UserServiceImpl implements IUserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    public UserEntity getUser(String email) {
+
+        return userRepo.findByEmail(email);
+    }
+
+    @Override
     public UserEntity createUser(UserRegistrerRequestModel userReq) {
         UserEntity userEntity = new UserEntity();
 
